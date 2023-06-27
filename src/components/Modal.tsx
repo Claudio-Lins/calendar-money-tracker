@@ -2,7 +2,6 @@ import { useNewEntrieModal } from "@/context/newEntrieModal";
 import { ArrowDownCircle, ArrowUpCircle, X } from "lucide-react";
 import React, { ReactNode, useState } from "react";
 interface ModalProps {
-  isModalOpen: boolean;
   formExpense: boolean;
   setFormExpense: React.Dispatch<React.SetStateAction<boolean>>;
   formIncome: boolean;
@@ -23,7 +22,6 @@ export function Modal({
   const { setIsOpen, isOpen } = useNewEntrieModal();
   const [isSlideLeftOpen, setIsSlideLeftOpen] = useState(false);
   const [isSlideRightOpen, setIsSlideRightOpen] = useState(false);
-  const [] = useState(false);
 
   function handleModalStatus(e: any) {
     if (e.target.classList.contains("modalBg")) {

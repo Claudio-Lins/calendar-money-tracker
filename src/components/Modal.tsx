@@ -26,6 +26,7 @@ export function Modal({
   function handleModalStatus(e: any) {
     if (e.target.classList.contains("modalBg")) {
       setStatusModal(false);
+      resetSlide();
     }
   }
 

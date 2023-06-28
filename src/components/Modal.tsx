@@ -61,8 +61,8 @@ export function Modal({
                 }}
                 className={`
           absolute w-1/2 bg-red-500 h-full flex items-center justify-center transition-all duration-1000 flex-col  cursor-pointer group
-          ${isSlideLeftOpen ? "-left-[42.5%]" : "left-0"}
-          ${formIncome ? "-left-full" : ""}
+          ${isSlideLeftOpen ? "-left-72" : "left-0"}
+          ${formIncome ? "-left-96" : ""}
           `}
               >
                 <ArrowDownCircle
@@ -100,7 +100,7 @@ export function Modal({
             absolute w-1/2 bg-blue-500 h-full flex flex-col items-center justify-center cursor-pointer
             transition-all duration-1000 group
             ${isSlideRightOpen ? "-right-72" : "right-0"}
-            ${formExpense ? "-right-full" : ""}
+            ${formExpense ? "-right-96" : ""}
           `}
               >
                 <ArrowUpCircle

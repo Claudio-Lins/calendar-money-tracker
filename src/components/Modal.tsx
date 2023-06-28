@@ -99,7 +99,7 @@ export function Modal({
                 className={`
             absolute w-1/2 bg-blue-500 h-full flex flex-col items-center justify-center cursor-pointer
             transition-all duration-1000 group
-            ${isSlideRightOpen ? "-right-[42.5%]" : "right-0"}
+            ${isSlideRightOpen ? "-right-72" : "right-0"}
             ${formExpense ? "-right-full" : ""}
           `}
               >

@@ -1,6 +1,6 @@
 import { useNewEntrieModal } from "@/context/newEntrieModal";
 import { ArrowDownCircle, ArrowUpCircle, X } from "lucide-react";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 interface ModalProps {
   formExpense: boolean;
   setFormExpense: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,6 +35,26 @@ export function Modal({
     setFormExpense(false);
     setFormIncome(false);
   }
+  const [esquerda, setEsquerda] = useState("");
+  const [direita, setDireita] = useState("");
+  useEffect(() => {
+    if (isSlideLeftOpen) {
+      setEsquerda("-left-[42%]");
+    } else {
+      setEsquerda("left-0");
+    }
+    if (formIncome) {
+      setEsquerda("-left-[100%]");
+    }
+    if (isSlideRightOpen) {
+      setDireita("-right-[42%]");
+    } else {
+      setDireita("right-0");
+    }
+    if (formExpense) {
+      setDireita("-right-[100%]");
+    }
+  }, [formExpense, formIncome, isSlideLeftOpen, isSlideRightOpen]);
 
   return (
     <>
@@ -61,8 +81,7 @@ export function Modal({
                 }}
                 className={`
           absolute w-1/2 bg-red-500 h-full flex items-center justify-center transition-all duration-1000 flex-col  cursor-pointer group
-          ${isSlideLeftOpen ? "-left-72" : "left-0"}
-          ${formIncome ? "-left-96" : ""}
+          ${esquerda}
           `}
               >
                 <ArrowDownCircle
@@ -99,8 +118,7 @@ export function Modal({
                 className={`
             absolute w-1/2 bg-blue-500 h-full flex flex-col items-center justify-center cursor-pointer
             transition-all duration-1000 group
-            ${isSlideRightOpen ? "-right-72" : "right-0"}
-            ${formExpense ? "-right-96" : ""}
+            ${direita}
           `}
               >
                 <ArrowUpCircle

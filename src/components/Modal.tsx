@@ -8,7 +8,7 @@ interface ModalProps {
   setFormIncome: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
   setStatusModal: (status: boolean) => void;
-  children?: ReactNode;
+  children: ReactNode;
 }
 
 export function Modal({
@@ -62,7 +62,7 @@ export function Modal({
                 className={`
           absolute w-1/2 bg-red-500 h-full flex items-center justify-center transition-all duration-1000 flex-col  cursor-pointer group
           ${isSlideLeftOpen ? "-left-[42.5%]" : "left-0"}
-          ${formIncome && "-left-[50%]"}
+          ${formIncome && "-left-full"}
           `}
               >
                 <ArrowDownCircle
@@ -100,7 +100,7 @@ export function Modal({
             absolute w-1/2 bg-blue-500 h-full flex flex-col items-center justify-center cursor-pointer
             transition-all duration-1000 group
             ${isSlideRightOpen ? "-right-[42.5%]" : "right-0"}
-            ${formExpense && "-right-[50%]"}
+            ${formExpense && "-right-full"}
           `}
               >
                 <ArrowUpCircle

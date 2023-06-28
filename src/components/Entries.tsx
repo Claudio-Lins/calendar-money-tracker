@@ -14,7 +14,6 @@ export function Entries() {
       formIncome={formIncome}
       setFormIncome={setFormIncome}
       setStatusModal={(status: boolean) => setIsOpen(status)}
-      isModalOpen={isOpen}
     >
       {formExpense && "Form Expense"}
       {formIncome && "Form Income"}

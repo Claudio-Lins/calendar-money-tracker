@@ -2,16 +2,22 @@ import React from "react";
 import { HeaderCell } from "./HeaderCell";
 import { FooterCell } from "./FooterCell";
 import { ContentCell } from "./ContentCell";
-import { EntrieTypes } from "@/@types/EntrieTypes";
+import { EntryTypes } from "@/@types/EntryTypes";
 
-interface CellProps {
-  entries: EntrieTypes[];
-}
+const daysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
-export function Cell({ entries }: CellProps) {
+export function Cell({ entries }: EntryTypes) {
   return (
     <div className="w-[calc(100%/5)] h-[calc(100vw/5)] rounded-xl border-[0.5px] border-zinc-600 text-zinc-300 bg-zinc-700 overflow-y-auto flex flex-col items-center justify-between shadow-sm">
-      <HeaderCell />
+      <HeaderCell day={29} daysOfWeek="Thu" />
       <div className="w-full p-2 h-full">
         <ContentCell entries={entries} />
       </div>

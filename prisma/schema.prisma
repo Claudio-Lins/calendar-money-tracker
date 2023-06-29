@@ -10,13 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Entrie {
-  id        String   @id @default(uuid())
-  title     String
-  amount    Int
-  type      TYPE
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// model Entry and EntryDetails
+model Entry {
+  id        String         @id @default(uuid())
+  type      TYPE           @default(EXPENSE)
+  details   EntryDetails[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model EntryDetails {
+  id          String   @id @default(uuid())
+  entryId     String
+  entry       Entry    @relation(fields: [entryId], references: [id])
+  description String?
+  locale      String?
+  amount      Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum TYPE {

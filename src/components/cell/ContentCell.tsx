@@ -12,7 +12,6 @@ export function ContentCell({ entries }: EntryTypes) {
             key={entry.id}
             className={`
             border-b-[0.5px] border-zinc-500
-            ${entry.type === "INCOME" ? "text-green-300" : "text-red-300"}
             `}
           >
             {entry.details.map((entryDetails) => (

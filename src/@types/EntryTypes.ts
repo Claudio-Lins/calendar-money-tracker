@@ -1,13 +1,15 @@
 export interface EntryTypes {
   entries: {
     id: string;
-    type: "EXPENSE" | "INCOME";
+    updatedAt: Date;
     details: {
       id: string;
       entryId: string;
-      description: string;
-      locale: string;
+      description: string | null;
+      type: "INCOME" | "EXPENSE";
+      locale: string | null;
       amount: number;
+      updatedAt: Date;
     }[];
   }[];
 }

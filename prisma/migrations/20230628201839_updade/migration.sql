@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Entrie" ALTER COLUMN "amount" SET DATA TYPE DECIMAL(65,30);

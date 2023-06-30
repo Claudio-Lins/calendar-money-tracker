@@ -1,16 +1,9 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Entrie` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE "Entrie";
+-- CreateEnum
+CREATE TYPE "Type" AS ENUM ('INCOME', 'EXPENSE');
 
 -- CreateTable
 CREATE TABLE "Entry" (
     "id" TEXT NOT NULL,
-    "type" "TYPE" NOT NULL DEFAULT 'EXPENSE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -24,6 +17,7 @@ CREATE TABLE "EntryDetails" (
     "description" TEXT,
     "locale" TEXT,
     "amount" DOUBLE PRECISION NOT NULL,
+    "type" "Type" NOT NULL DEFAULT 'EXPENSE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

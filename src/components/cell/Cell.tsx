@@ -1,13 +1,28 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { HeaderCell } from "./HeaderCell";
-import { FooterCell } from "./FooterCell";
-import { ContentCell } from "./ContentCell";
 import { EntryTypes } from "@/@types/EntryTypes";
 import { Eye } from "lucide-react";
 
-const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
 export function Cell({ entries }: EntryTypes) {
+  // const [totalIncome, setTotalIncome] = useState(0);
+
+  const totalExpense = entries
+    .filter((entry) => {
+      return entry.details.length > 0;
+    })
+    .map((entry) =>
+      entry.details
+        .filter((detail) => {
+          return detail.type === "EXPENSE";
+        })
+        .reduce((acc, curr) => {
+          return acc + curr.amount;
+        }, 0)
+    );
+
+  console.log(totalExpense);
+
   return (
     <>
       {entries
@@ -64,9 +79,38 @@ export function Cell({ entries }: EntryTypes) {
                 </div>
               </div>
             </div>
-            <FooterCell />
+            <div className="w-full flex items-center justify-between bg-zinc-800 px-2 h-12">
+              <div className="text-sm text-red-600 font-semibold">
+                {entry.details
+                  .filter((details) => details.type === "EXPENSE")
+                  .reduce((acc, curr) => acc + curr.amount, 0)}
+              </div>
+              <div className="text-lg text-white font-bold">
+                {entry.details.reduce((acc, curr) => acc + curr.amount, 0)}
+              </div>
+              <div className="text-sm text-blue-600 font-semibold">
+                {entry.details
+                  .filter((details) => details.type === "INCOME")
+                  .reduce((acc, curr) => acc + curr.amount, 0)}
+              </div>
+            </div>
           </div>
         ))}
     </>
   );
 }
+// entries
+//   .filter((entry) => {
+//     return entry.details.length > 0;
+//   })
+//   .map((entry) => {
+//     return {
+//       totalAmoutExpense: entry.details
+//         .filter((detail) => {
+//           return detail.type === "EXPENSE";
+//         })
+//         .reduce((acc, curr) => {
+//           return acc + curr.amount;
+//         }, 0),
+//     };
+//   });

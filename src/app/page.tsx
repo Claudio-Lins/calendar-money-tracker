@@ -18,8 +18,25 @@ export default async function Home() {
     },
   });
 
+  const totalExpense = entries
+    .filter((entry) => {
+      return entry.details.length > 0;
+    })
+    .map((entry) => {
+      return {
+        totalAmoutExpense: entry.details
+          .filter((detail) => {
+            return detail.type === "EXPENSE";
+          })
+          .reduce((acc, curr) => {
+            return acc + curr.amount;
+          }, 0),
+      };
+    });
+
   return (
     <main className="h-screen p-4 flex flex-wrap gap-20">
+      {/* <pre>{JSON.stringify(totalExpense, null, 2)}</pre> */}
       <Cell entries={entries} />
       <NewCell />
       <Entries />

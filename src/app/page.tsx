@@ -1,6 +1,4 @@
 import { Entries } from "@/components/Entries";
-import { Cell } from "@/components/cell/Cell";
-import { ContentCell } from "@/components/cell/ContentCell";
 import { FooterCell } from "@/components/cell/FooterCell";
 import { HeaderCell } from "@/components/cell/HeaderCell";
 import { NewCell } from "@/components/cell/NewCell";
@@ -59,12 +57,17 @@ export default async function Home() {
                     `}
                     >
                       <p>{details.description}</p>
-                      <strong>
-                        {new Intl.NumberFormat("pt-PT", {
-                          style: "currency",
-                          currency: "EUR",
-                        }).format(details.amount)}
-                      </strong>
+                      <div className="flex items-center gap-1">
+                        <strong>
+                          {new Intl.NumberFormat("pt-PT", {
+                            style: "currency",
+                            currency: "EUR",
+                          }).format(details.amount)}
+                        </strong>
+                        <button className="w-full py-2 whitespace-nowrap">
+                          <Eye size={12} />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

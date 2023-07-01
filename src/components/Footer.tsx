@@ -1,5 +1,5 @@
 "use client";
-import { UserButton } from "@clerk/nextjs";
+// import { UserButton } from "@clerk/nextjs";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
 
@@ -31,9 +31,7 @@ export function Footer() {
           )}
           <span className="text-xs">Dashboard</span>
         </button>
-        <div className="flex items-center">
-          <UserButton />
-        </div>
+        <div className="flex items-center">{/* <UserButton /> */}</div>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export function Cell({ entries }: EntryTypes) {
         .map((entry) => (
           <div
             key={entry.id}
-            className="w-[calc(100%/5)] h-[calc(100vw/5)] rounded-xl border-[0.5px] border-zinc-600 text-zinc-300 bg-zinc-700 overflow-y-auto flex flex-col items-center justify-between shadow-sm"
+            className="relative overflow-y-scroll w-[calc(100%/5)] h-[calc(100vw/5)] rounded-xl border-[0.5px] border-zinc-600 text-zinc-300 bg-zinc-700  flex flex-col items-center justify-between shadow-sm"
           >
             <HeaderCell
               day={new Intl.DateTimeFormat("pt-PT", {
@@ -44,7 +44,7 @@ export function Cell({ entries }: EntryTypes) {
                 .format(new Date(entry.updatedAt))
                 .slice(0, 3)}
             />
-            <div className="w-full p-2 h-full">
+            <div className="w-full h-full p-2 overflow-auto">
               <div className="min-w-full text-zinc-300 text-xs">
                 <div
                   className={`flex flex-col gap-2
@@ -79,15 +79,15 @@ export function Cell({ entries }: EntryTypes) {
                 </div>
               </div>
             </div>
-            <div className="w-full flex items-center justify-between bg-zinc-800 px-2 h-12">
+            <div className="z-10 bottom-0 w-full flex items-center justify-between bg-zinc-800 px-2 h-12">
               <div className="text-sm text-red-600 font-semibold">
                 {entry.details
                   .filter((details) => details.type === "EXPENSE")
                   .reduce((acc, curr) => acc + curr.amount, 0)}
               </div>
-              <div className="text-lg text-white font-bold">
+              {/* <div className="text-lg text-white font-bold">
                 {entry.details.reduce((acc, curr) => acc + curr.amount, 0)}
-              </div>
+              </div> */}
               <div className="text-sm text-blue-600 font-semibold">
                 {entry.details
                   .filter((details) => details.type === "INCOME")
@@ -99,18 +99,3 @@ export function Cell({ entries }: EntryTypes) {
     </>
   );
 }
-// entries
-//   .filter((entry) => {
-//     return entry.details.length > 0;
-//   })
-//   .map((entry) => {
-//     return {
-//       totalAmoutExpense: entry.details
-//         .filter((detail) => {
-//           return detail.type === "EXPENSE";
-//         })
-//         .reduce((acc, curr) => {
-//           return acc + curr.amount;
-//         }, 0),
-//     };
-//   });

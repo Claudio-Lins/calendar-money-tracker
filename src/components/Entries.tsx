@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Modal } from "./Modal";
 import { useNewEntrieModal } from "@/context/newEntrieModal";
+import { Form } from "./cell/Form";
 
 export function Entries() {
   const [formExpense, setFormExpense] = useState(false);
@@ -15,7 +16,7 @@ export function Entries() {
       setFormIncome={setFormIncome}
       setStatusModal={(status: boolean) => setIsOpen(status)}
     >
-      {formExpense && "Form Expense"}
+      {formExpense && <Form />}
       {formIncome && "Form Income"}
     </Modal>
   );

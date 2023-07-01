@@ -1,8 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import { Header } from "@/components/Header";
 import { SubHeader } from "@/components/SubHeader";
 import { Footer } from "@/components/Footer";
@@ -18,26 +16,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
-    >
-      <html lang="en">
-        <body
-          className={`
+    <html lang="en">
+      <body
+        className={`
         ${inter.className}
         bg-zinc-800 w-full h-screen flex flex-col
         `}
-        >
-          <div className="">
-            <Header />
-            <SubHeader />
-          </div>
-          {children}
-          <Footer />
-        </body>
-      </html>
-    </ClerkProvider>
+      >
+        <div className="">
+          <Header />
+          <SubHeader />
+        </div>
+        {children}
+        <Footer />
+      </body>
+    </html>
   );
 }

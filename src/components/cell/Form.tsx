@@ -4,40 +4,48 @@ import { useState } from "react";
 
 interface FormDataProps {
   description?: string;
-  amount: number;
+  amount: number | string;
   type: string;
   locale?: string;
+  createdAt?: Date;
 }
 export function Form() {
   const [formData, setFormData] = useState<FormDataProps>({
     description: "",
-    amount: 0,
+    amount: "",
     type: "INCOME",
     locale: "",
+    createdAt: new Date(),
   });
 
   async function criarEntry(formData: FormDataProps) {
     try {
-      const response = await fetch("/api/entries", {
+      const entryDetailsResponse = await fetch("/api/entries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          details: {
+          entryDetails: {
             description: formData.description,
             amount: formData.amount,
             type: formData.type,
             locale: formData.locale,
+            createdAt: formData.createdAt
+              ? formData.createdAt.toISOString()
+              : new Date().toISOString(),
           },
         }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Nova entrada criada:", data.entrie);
+      if (entryDetailsResponse.ok) {
+        const entryDetailsData = await entryDetailsResponse.json();
+        const entryDetails = entryDetailsData.entry.entryDetails;
+        console.log("Detalhes adicionados à entrada existente:", entryDetails);
       } else {
-        console.log("Ocorreu um erro ao criar a entrada.");
+        console.log(
+          "Ocorreu um erro ao adicionar detalhes à entrada existente."
+        );
       }
     } catch (error) {
       console.error("Ocorreu um erro ao processar a solicitação:", error);
@@ -53,23 +61,23 @@ export function Form() {
       className="flex flex-col"
     >
       {/* date */}
-      {/* <div className="flex flex-col">
-        <input 
-            type="date" 
-            name="date"
-            value={
-                formData.createdAt
-                  ? new Date(formData.createdAt).toISOString().split("T")[0]
-                  : new Date().toISOString().split("T")[0]
-              }
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  createdAt: new Date(e.target.value),
-                })
-              }
-            />
-      </div> */}
+      <div className="flex flex-col">
+        <input
+          type="date"
+          name="date"
+          value={
+            formData.createdAt
+              ? new Date(formData.createdAt).toISOString().split("T")[0]
+              : new Date().toISOString().split("T")[0]
+          }
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              createdAt: new Date(e.target.value),
+            })
+          }
+        />
+      </div>
       <div className="flex flex-col">
         <input
           type="text"

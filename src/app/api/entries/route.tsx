@@ -4,22 +4,44 @@ import { NextRequest, NextResponse } from "next/server";
 // create entry
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const entrie = await prisma.entry.create({
-    data: {
-      details: {
-        create: [
-          {
-            description: body.details.description,
-            amount: body.details.amount,
-            type: body.details.type,
-            locale: body.details.locale,
-          },
-        ],
-      },
+
+  let entry = await prisma.entry.findFirst({
+    where: {
+      createdAt: body.createdAt,
     },
   });
+
+  if (!entry) {
+    entry = await prisma.entry.create({
+      data: {
+        entryDetails: {
+          create: [
+            {
+              description: body.entryDetails.description,
+              amount: body.entryDetails.amount,
+              type: body.entryDetails.type,
+              locale: body.entryDetails.locale,
+              createdAt: body.entryDetails.createdAt,
+            },
+          ],
+        },
+      },
+    });
+  } else {
+    await prisma.entryDetails.create({
+      data: {
+        entryId: entry.id,
+        description: body.entryDetails.description,
+        amount: body.entryDetails.amount,
+        type: body.entryDetails.type,
+        locale: body.entryDetails.locale,
+        createdAt: body.entryDetails.createdAt,
+      },
+    });
+  }
+
   return NextResponse.json({
-    entrie,
+    entry,
   });
 }
 
@@ -36,7 +58,7 @@ export async function DELETE(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const entries = await prisma.entry.findMany({
     include: {
-      details: true,
+      entryDetails: true,
     },
   });
   return NextResponse.json({

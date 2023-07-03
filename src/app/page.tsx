@@ -12,7 +12,7 @@ export default async function Home() {
       createdAt: "desc",
     },
   });
-
+  // console.log(<pre>{JSON.stringify(entries, null, 2)}</pre>);
   return (
     <main className="h-screen p-4 flex flex-wrap gap-20">
       <Cell entries={entries} />

@@ -32,7 +32,7 @@ export function Form() {
             type: formData.type,
             locale: formData.locale,
             createdAt: formData.createdAt
-              ? formData.createdAt.toISOString()
+              ? formData.createdAt
               : new Date().toISOString(),
           },
         }),
@@ -64,7 +64,7 @@ export function Form() {
       <div className="flex flex-col">
         <input
           type="date"
-          name="date"
+          placeholder="Data"
           value={
             formData.createdAt
               ? new Date(formData.createdAt).toISOString().split("T")[0]

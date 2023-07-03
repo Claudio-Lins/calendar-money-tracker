@@ -1,5 +1,7 @@
 "use client";
 
+import { useNewEntrieModal } from "@/context/newEntrieModal";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface FormDataProps {
@@ -10,10 +12,12 @@ interface FormDataProps {
   createdAt?: Date;
 }
 export function Form() {
+  const router = useRouter();
+  const { setIsOpen } = useNewEntrieModal();
   const [formData, setFormData] = useState<FormDataProps>({
     description: "",
     amount: "",
-    type: "INCOME",
+    type: "EXPENSE",
     locale: "",
     createdAt: new Date(),
   });
@@ -52,14 +56,21 @@ export function Form() {
     }
   }
 
+  async function handleCreateEntry(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    criarEntry(formData);
+    setIsOpen(false);
+    setFormData({
+      description: "",
+      amount: "",
+      type: "",
+      locale: "",
+    });
+    router.push("/");
+  }
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        criarEntry(formData);
-      }}
-      className="flex flex-col"
-    >
+    <form onSubmit={handleCreateEntry} className="flex flex-col">
       {/* date */}
       <div className="flex flex-col">
         <input

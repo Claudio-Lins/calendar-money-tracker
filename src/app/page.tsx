@@ -9,7 +9,7 @@ export default async function Home() {
       entryDetails: true,
     },
     orderBy: {
-      createdAt: "desc",
+      createdAt: "asc",
     },
   });
   // console.log(<pre>{JSON.stringify(entries, null, 2)}</pre>);

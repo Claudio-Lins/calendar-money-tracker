@@ -11,6 +11,13 @@ export function Cell({ entries }: EntryTypes) {
         .filter((entry) => {
           return entry.entryDetails.length > 0;
         })
+        // sort by date
+        .sort((a, b) => {
+          return (
+            new Date(b.entryDetails[0].createdAt).getTime() -
+            new Date(a.entryDetails[0].createdAt).getTime()
+          );
+        })
         .map((entry) => (
           <div
             key={entry.id}
@@ -19,11 +26,11 @@ export function Cell({ entries }: EntryTypes) {
             <HeaderCell
               day={new Intl.DateTimeFormat("pt-PT", {
                 day: "2-digit",
-              }).format(new Date(entry.createdAt))}
+              }).format(new Date(entry.entryDetails[0].createdAt))}
               daysWeek={new Intl.DateTimeFormat("us", {
                 weekday: "short",
               })
-                .format(new Date(entry.createdAt))
+                .format(new Date(entry.entryDetails[0].createdAt))
                 .slice(0, 3)}
             />
             <div className="w-full h-full overflow-y-scroll p-2 ">

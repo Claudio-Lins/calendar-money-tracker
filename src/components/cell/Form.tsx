@@ -1,6 +1,6 @@
 "use client";
 
-import { useNewEntrieModal } from "@/context/newEntrieModal";
+import { useNewEntrie } from "@/context/entriesStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -13,17 +13,18 @@ interface FormDataProps {
 }
 export function Form() {
   const router = useRouter();
-  const { setIsOpen } = useNewEntrieModal();
+  const { setIsOpen, typeOfEntry } = useNewEntrie();
   const [formData, setFormData] = useState<FormDataProps>({
     description: "",
     amount: "",
-    type: "EXPENSE",
+    type: typeOfEntry,
     locale: "",
     createdAt: new Date(),
   });
 
   async function criarEntry(formData: FormDataProps) {
     try {
+      console.log(typeOfEntry);
       const entryDetailsResponse = await fetch("/api/entries", {
         method: "POST",
         headers: {
@@ -33,7 +34,7 @@ export function Form() {
           entryDetails: {
             description: formData.description,
             amount: formData.amount,
-            type: formData.type,
+            type: typeOfEntry,
             locale: formData.locale,
             createdAt: formData.createdAt
               ? formData.createdAt
@@ -125,7 +126,7 @@ export function Form() {
           }
         />
       </div>
-      <div className="flex flex-col">
+      {/* <div className="flex flex-col">
         <select
           name="type"
           id="type"
@@ -136,7 +137,7 @@ export function Form() {
           <option value="EXPENSE">Expense</option>
           <option value="INCOME">Income</option>
         </select>
-      </div>
+      </div> */}
       <div className="flex flex-col">
         <button type="submit">Create</button>
       </div>

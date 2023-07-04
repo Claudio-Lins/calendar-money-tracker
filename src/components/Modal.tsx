@@ -1,4 +1,4 @@
-import { useNewEntrieModal } from "@/context/newEntrieModal";
+import { useNewEntrie } from "@/context/entriesStore";
 import { ArrowDownCircle, ArrowUpCircle, X } from "lucide-react";
 import React, { ReactNode, useEffect, useState } from "react";
 interface ModalProps {
@@ -19,7 +19,7 @@ export function Modal({
   setFormIncome,
   children,
 }: ModalProps) {
-  const { setIsOpen, isOpen } = useNewEntrieModal();
+  const { setIsOpen, isOpen, setTypeOfEntry } = useNewEntrie();
   const [isSlideLeftOpen, setIsSlideLeftOpen] = useState(false);
   const [isSlideRightOpen, setIsSlideRightOpen] = useState(false);
 
@@ -79,6 +79,7 @@ export function Modal({
                 onClick={() => {
                   setIsSlideLeftOpen(!isSlideLeftOpen);
                   setFormExpense(true);
+                  setTypeOfEntry("EXPENSE");
                 }}
                 className={`
           absolute w-1/2 bg-red-500 h-full flex items-center justify-center transition-all duration-1000 flex-col  cursor-pointer group
@@ -115,6 +116,7 @@ export function Modal({
                 onClick={() => {
                   setIsSlideRightOpen(!isSlideRightOpen);
                   setFormIncome(true);
+                  setTypeOfEntry("INCOME");
                 }}
                 className={`
             absolute w-1/2 bg-blue-500 h-full flex flex-col items-center justify-center cursor-pointer

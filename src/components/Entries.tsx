@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { Modal } from "./Modal";
-import { useNewEntrieModal } from "@/context/newEntrieModal";
+import { useNewEntrie } from "@/context/entriesStore";
 import { Form } from "./cell/Form";
 
 export function Entries() {
   const [formExpense, setFormExpense] = useState(false);
   const [formIncome, setFormIncome] = useState(false);
-  const { setIsOpen, isOpen } = useNewEntrieModal();
+  const { setIsOpen, isOpen } = useNewEntrie();
   return (
     <Modal
       formExpense={formExpense}
@@ -16,8 +16,7 @@ export function Entries() {
       setFormIncome={setFormIncome}
       setStatusModal={(status: boolean) => setIsOpen(status)}
     >
-      {formExpense && <Form />}
-      {formIncome && "Form Income"}
+      <Form />
     </Modal>
   );
 }

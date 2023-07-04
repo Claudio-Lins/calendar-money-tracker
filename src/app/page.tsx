@@ -18,6 +18,7 @@ export default async function Home() {
       <Cell entries={entries} />
       <NewCell />
       <Entries />
+      <pre className="text-white">{JSON.stringify(entries, null, 2)}</pre>
     </main>
   );
 }

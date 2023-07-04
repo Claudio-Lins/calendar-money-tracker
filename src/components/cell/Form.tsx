@@ -67,6 +67,7 @@ export function Form() {
       locale: "",
     });
     router.push("/");
+    router.refresh();
   }
 
   return (

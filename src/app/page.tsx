@@ -14,7 +14,7 @@ export default async function Home() {
   });
   // console.log(<pre>{JSON.stringify(entries, null, 2)}</pre>);
   return (
-    <main className="h-screen p-4 flex flex-wrap gap-20">
+    <main className="h-screen p-4 flex flex-wrap gap-4">
       <Cell entries={entries} />
       <NewCell />
       <Entries />

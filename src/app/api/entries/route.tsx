@@ -6,18 +6,26 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
+  const entryDate = new Date(body.entryDetails.createdAt); // Converte a string da data para um objeto Date
+  const entryYear = entryDate.getFullYear(); // Obtém o ano da data
+  const entryMonth = entryDate.getMonth(); // Obtém o mês da data
+  const entryDay = entryDate.getDate(); // Obtém o dia da data
+
   const entry = await prisma.entry.findFirst({
     where: {
       entryDetails: {
         some: {
-          createdAt: body.entryDetails.createdAt,
+          createdAt: {
+            gte: new Date(entryYear, entryMonth, entryDay), // Compara apenas o dia, mês e ano
+            lt: new Date(entryYear, entryMonth, entryDay + 1), // Adiciona 1 dia para a comparação de "menor que"
+          },
         },
       },
     },
   });
 
   if (entry) {
-    console.log("Entrada existente encontrada");
+    console.log("Entrada existente encontrada", entryDate);
 
     const entryDetails = await prisma.entryDetails.create({
       data: {

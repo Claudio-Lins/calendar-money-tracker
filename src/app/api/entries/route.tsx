@@ -3,6 +3,7 @@ import { Entry } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 // create entry
+
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
@@ -83,6 +84,9 @@ export async function GET(request: NextRequest) {
       entryDetails: true,
     },
   });
+
+  if (!entries) throw new Error("Problemas com a rota GET");
+  console.log({ entries });
   return NextResponse.json({
     entries,
   });

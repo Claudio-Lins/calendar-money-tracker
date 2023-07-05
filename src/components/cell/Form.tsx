@@ -24,7 +24,6 @@ export function Form() {
 
   async function criarEntry(formData: FormDataProps) {
     try {
-      console.log(typeOfEntry);
       const entryDetailsResponse = await fetch("/api/entries", {
         method: "POST",
         headers: {
@@ -46,11 +45,13 @@ export function Form() {
       if (entryDetailsResponse.ok) {
         const entryDetailsData = await entryDetailsResponse.json();
         const entryDetails = entryDetailsData.entry.entryDetails;
+        router.refresh();
         console.log("Detalhes adicionados à entrada existente:", entryDetails);
       } else {
         console.log(
           "Ocorreu um erro ao adicionar detalhes à entrada existente."
         );
+        router.refresh();
       }
     } catch (error) {
       console.error("Ocorreu um erro ao processar a solicitação:", error);
@@ -67,8 +68,6 @@ export function Form() {
       type: "",
       locale: "",
     });
-    router.push("/");
-    router.refresh();
   }
 
   return (

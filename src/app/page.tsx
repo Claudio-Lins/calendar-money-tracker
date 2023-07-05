@@ -12,13 +12,12 @@ export default async function Home() {
       createdAt: "asc",
     },
   });
-  // console.log(<pre>{JSON.stringify(entries, null, 2)}</pre>);
   return (
     <main className="h-screen p-4 flex flex-wrap gap-4">
-      <Cell entries={entries} />
+      <Cell entries={entries} entryDetails={undefined} />
       <NewCell />
       <Entries />
-      <pre className="text-white">{JSON.stringify(entries, null, 2)}</pre>
+      {/* <pre className="text-white">{JSON.stringify(entries, null, 2)}</pre> */}
     </main>
   );
 }

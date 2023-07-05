@@ -1,4 +1,5 @@
 export interface EntryTypes {
+  entryDetails: any;
   entries: {
     id: string;
     updatedAt: Date;

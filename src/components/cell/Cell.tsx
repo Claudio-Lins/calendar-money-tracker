@@ -1,14 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { HeaderCell } from "./HeaderCell";
-import { EntryTypes } from "@/@types/EntryTypes";
 import { Eye } from "lucide-react";
 import { useNewEntrie } from "@/context/entriesStore";
+import { EntryTypes } from "@/@types/EntryTypes";
 
 export function Cell({ entries }: EntryTypes) {
-  const { setTotalExpense, setTotalIncome, totalExpense, totalIncome } =
-    useNewEntrie();
-
   return (
     <>
       {entries

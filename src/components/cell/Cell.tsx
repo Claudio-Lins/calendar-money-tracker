@@ -40,6 +40,7 @@ export function Cell({ entries }: EntryTypes) {
                 })
                   .format(new Date(entry.entryDetails[0].createdAt))
                   .slice(0, 3)}
+                href={`/entry/${entry.id}`}
               />
               <div className="w-full h-full overflow-y-scroll p-2 ">
                 <div className="min-w-full text-zinc-300 text-xs">

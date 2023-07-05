@@ -14,16 +14,8 @@ export default async function Home() {
   }).then((res) => res.json());
   const data = res.entries;
 
-  // const entries = await prisma.entry.findMany({
-  //   include: {
-  //     entryDetails: true,
-  //   },
-  //   orderBy: {
-  //     createdAt: "asc",
-  //   },
-  // });
   return (
-    <main className="h-screen p-4 flex flex-wrap gap-4">
+    <main className="min-h-[calc(100vh+200px)] pb-24 pt-4 flex flex-wrap gap-12 justify-center items-center">
       <Cell entries={data} />
       <NewCell />
       <Entries />

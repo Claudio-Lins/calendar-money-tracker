@@ -35,9 +35,7 @@ export function Form() {
             amount: formData.amount,
             type: typeOfEntry,
             locale: formData.locale,
-            createdAt: formData.createdAt
-              ? formData.createdAt
-              : new Date().toISOString(),
+            createdAt: formData.createdAt,
           },
         }),
       });

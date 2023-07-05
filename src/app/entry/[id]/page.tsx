@@ -23,7 +23,7 @@ export default async function Entry({ params: { id } }: EntryProps) {
         <h1>
           {new Intl.DateTimeFormat("pt", {
             dateStyle: "full",
-          }).format(entry?.createdAt)}
+          }).format(entry?.entryDetails[0].createdAt)}
         </h1>
         {entry?.entryDetails.map((entryDetail) => {
           return (

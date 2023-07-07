@@ -1,6 +1,7 @@
 "use client";
 
 import { useNewEntrie } from "@/context/entriesStore";
+import { useModal } from "@/context/modalStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -14,6 +15,12 @@ interface FormDataProps {
 export function Form() {
   const router = useRouter();
   const { setIsOpen, typeOfEntry } = useNewEntrie();
+  const {
+    isSlideLeftOpen,
+    isSlideRightOpen,
+    setIsSlideLeftOpen,
+    setIsSlideRightOpen,
+  } = useModal();
   const [formData, setFormData] = useState<FormDataProps>({
     description: "",
     amount: "",
@@ -123,18 +130,6 @@ export function Form() {
           }
         />
       </div>
-      {/* <div className="flex flex-col">
-        <select
-          name="type"
-          id="type"
-          placeholder="Tipo"
-          value={formData.type}
-          onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-        >
-          <option value="EXPENSE">Expense</option>
-          <option value="INCOME">Income</option>
-        </select>
-      </div> */}
       <div className="flex flex-col">
         <button type="submit">Create</button>
       </div>

@@ -1,4 +1,4 @@
-import { Plus, X } from "lucide-react";
+import { Eye, Plus, X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -13,9 +13,14 @@ export function HeaderCell({ day, daysWeek, href }: HeaderCellProps) {
     <div className="w-full bg-purple-500 flex justify-between items-center px-2 h-12 relative">
       <span className=" text-white font-light ml-1">{daysWeek}</span>
       <span className=" text-white font-semibold text-2xl">{day}</span>
-      <Link href={href} className="">
-        <Plus size={20} />
-      </Link>
+      <div className="flex items-center gap-1">
+        <Link href={href} className="">
+          <Eye size={20} />
+        </Link>
+        <Link href="#" className="">
+          <Plus size={20} />
+        </Link>
+      </div>
     </div>
   );
 }

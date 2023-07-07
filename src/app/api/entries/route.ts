@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { Entry } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 // create entry
@@ -71,7 +72,9 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const body = await request.json();
   const entrie = await prisma.entry.delete({
-    where: { id: body.id },
+    where: {
+      id: body.id,
+    },
   });
   return NextResponse.json({
     entrie,

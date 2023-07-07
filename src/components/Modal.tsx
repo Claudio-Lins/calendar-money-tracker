@@ -1,4 +1,5 @@
 import { useNewEntrie } from "@/context/entriesStore";
+import { useModal } from "@/context/modalStore";
 import { ArrowDownCircle, ArrowUpCircle, X } from "lucide-react";
 import React, { ReactNode, useEffect, useState } from "react";
 interface ModalProps {
@@ -20,8 +21,18 @@ export function Modal({
   children,
 }: ModalProps) {
   const { setIsOpen, isOpen, setTypeOfEntry } = useNewEntrie();
-  const [isSlideLeftOpen, setIsSlideLeftOpen] = useState(false);
-  const [isSlideRightOpen, setIsSlideRightOpen] = useState(false);
+  const {
+    isSlideLeftOpen,
+    isSlideRightOpen,
+    setIsSlideLeftOpen,
+    setIsSlideRightOpen,
+    esquerda,
+    setEsquerda,
+    direita,
+    setDireita,
+  } = useModal();
+  // const [isSlideLeftOpen, setIsSlideLeftOpen] = useState(false);
+  // const [isSlideRightOpen, setIsSlideRightOpen] = useState(false);
 
   function handleModalStatus(e: any) {
     if (e.target.classList.contains("modalBg")) {
@@ -36,8 +47,8 @@ export function Modal({
     setFormExpense(false);
     setFormIncome(false);
   }
-  const [esquerda, setEsquerda] = useState("");
-  const [direita, setDireita] = useState("");
+  // const [esquerda, setEsquerda] = useState("");
+  // const [direita, setDireita] = useState("");
   useEffect(() => {
     if (isSlideLeftOpen) {
       setEsquerda("-left-[42%]");

@@ -15,7 +15,7 @@ export default async function Home() {
   const data = res.entries;
 
   return (
-    <main className="min-h-[calc(100vh+200px)] pb-24 pt-4 flex flex-wrap gap-12 justify-center items-center">
+    <main className="min-h-[calc(100vh+200px)] pb-24 pt-4 flex flex-wrap gap-12 justify-center">
       <Cell entries={data} />
       <NewCell />
       <Entries />

@@ -3,25 +3,15 @@ import { useModal } from "@/context/modalStore";
 import { ArrowDownCircle, ArrowUpCircle, X } from "lucide-react";
 import React, { ReactNode, useEffect, useState } from "react";
 interface ModalProps {
-  formExpense: boolean;
-  setFormExpense: React.Dispatch<React.SetStateAction<boolean>>;
-  formIncome: boolean;
-  setFormIncome: React.Dispatch<React.SetStateAction<boolean>>;
-  className?: string;
   setStatusModal: (status: boolean) => void;
   children: ReactNode;
 }
 
-export function Modal({
-  setStatusModal,
-  formExpense,
-  setFormExpense,
-  formIncome,
-  setFormIncome,
-  children,
-}: ModalProps) {
-  const { setIsOpen, isOpen, setTypeOfEntry } = useNewEntrie();
+export function Modal({ setStatusModal, children }: ModalProps) {
+  const { setTypeOfEntry } = useNewEntrie();
   const {
+    setIsOpen,
+    isOpen,
     isSlideLeftOpen,
     isSlideRightOpen,
     setIsSlideLeftOpen,
@@ -30,9 +20,11 @@ export function Modal({
     setEsquerda,
     direita,
     setDireita,
+    formExpense,
+    setFormExpense,
+    formIncome,
+    setFormIncome,
   } = useModal();
-  // const [isSlideLeftOpen, setIsSlideLeftOpen] = useState(false);
-  // const [isSlideRightOpen, setIsSlideRightOpen] = useState(false);
 
   function handleModalStatus(e: any) {
     if (e.target.classList.contains("modalBg")) {
@@ -47,8 +39,7 @@ export function Modal({
     setFormExpense(false);
     setFormIncome(false);
   }
-  // const [esquerda, setEsquerda] = useState("");
-  // const [direita, setDireita] = useState("");
+
   useEffect(() => {
     if (isSlideLeftOpen) {
       setEsquerda("-left-[42%]");
@@ -66,7 +57,14 @@ export function Modal({
     if (formExpense) {
       setDireita("-right-[100%]");
     }
-  }, [formExpense, formIncome, isSlideLeftOpen, isSlideRightOpen]);
+  }, [
+    formExpense,
+    formIncome,
+    isSlideLeftOpen,
+    isSlideRightOpen,
+    setDireita,
+    setEsquerda,
+  ]);
 
   return (
     <>

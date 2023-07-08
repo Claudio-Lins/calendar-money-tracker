@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
 type ModalState = {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   isSlideLeftOpen: boolean;
   setIsSlideLeftOpen: (isOpen: boolean) => void;
   isSlideRightOpen: boolean;
@@ -16,6 +18,8 @@ type ModalState = {
 };
 
 const initialState: ModalState = {
+  isOpen: false,
+  setIsOpen: () => {},
   isSlideLeftOpen: false,
   setIsSlideLeftOpen: () => {},
   isSlideRightOpen: false,
@@ -32,6 +36,7 @@ const initialState: ModalState = {
 
 export const useModal = create<ModalState>((set) => ({
   ...initialState,
+  setIsOpen: (isOpen) => set({ isOpen }),
   setIsSlideLeftOpen: (isSlideLeftOpen) =>
     set({ isSlideLeftOpen: isSlideLeftOpen }),
   setIsSlideRightOpen: (isSlideRightOpen) =>

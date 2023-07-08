@@ -3,7 +3,7 @@
 import { useNewEntrie } from "@/context/entriesStore";
 import { useModal } from "@/context/modalStore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface FormDataProps {
   description?: string;
@@ -14,13 +14,21 @@ interface FormDataProps {
 }
 export function Form() {
   const router = useRouter();
-  const { setIsOpen, typeOfEntry } = useNewEntrie();
+  const { typeOfEntry } = useNewEntrie();
   const {
+    setIsOpen,
     isSlideLeftOpen,
     isSlideRightOpen,
     setIsSlideLeftOpen,
     setIsSlideRightOpen,
+    setFormExpense,
+    setFormIncome,
+    esquerda,
+    setEsquerda,
+    direita,
+    setDireita,
   } = useModal();
+
   const [formData, setFormData] = useState<FormDataProps>({
     description: "",
     amount: "",
@@ -28,6 +36,23 @@ export function Form() {
     locale: "",
     createdAt: new Date(),
   });
+
+  function resetForm() {
+    setFormData({
+      description: "",
+      amount: "",
+      type: typeOfEntry,
+      locale: "",
+      createdAt: new Date(),
+    });
+  }
+
+  function resetSlide() {
+    setIsSlideLeftOpen(false);
+    setIsSlideRightOpen(false);
+    setFormExpense(false);
+    setFormIncome(false);
+  }
 
   async function criarEntry(formData: FormDataProps) {
     try {
@@ -56,7 +81,6 @@ export function Form() {
         console.log(
           "Ocorreu um erro ao adicionar detalhes à entrada existente."
         );
-        router.refresh();
       }
     } catch (error) {
       console.error("Ocorreu um erro ao processar a solicitação:", error);
@@ -67,12 +91,8 @@ export function Form() {
     e.preventDefault();
     criarEntry(formData);
     setIsOpen(false);
-    setFormData({
-      description: "",
-      amount: "",
-      type: "",
-      locale: "",
-    });
+    resetForm();
+    resetSlide();
   }
 
   return (

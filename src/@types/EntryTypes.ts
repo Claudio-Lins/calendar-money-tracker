@@ -12,8 +12,8 @@ export interface EntryElement {
 export interface EntryDetail {
   id: string;
   entryId: string;
-  description: string;
-  locale: string;
+  description: string | null;
+  locale: string | null;
   amount: number;
   type: string;
   createdAt: Date;

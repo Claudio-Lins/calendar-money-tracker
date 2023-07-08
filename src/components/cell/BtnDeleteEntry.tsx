@@ -1,5 +1,5 @@
 "use client";
-import { EntryDetail } from "@/@types/EntryTypes";
+import { EntryDetail, EntryElement, EntryTypes } from "@/@types/EntryTypes";
 import { Entry } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
@@ -8,7 +8,12 @@ import { toast } from "react-hot-toast";
 interface BtnDeleteEntryPorps {
   id: string;
   children?: ReactNode | undefined;
-  entry?: Entry;
+  entry: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    entryDetails: EntryDetail[];
+  };
 }
 
 export async function BtnDeleteEntry({
@@ -18,22 +23,27 @@ export async function BtnDeleteEntry({
 }: BtnDeleteEntryPorps) {
   const router = useRouter();
 
+  const hasDetails = entry.entryDetails.length;
+
   async function deleteEmptyEntry(id: string) {
-    console.log(entry?.createdAt);
-    // if (id.length == 0) {
-    //   const response = await fetch(`/api/entries`, {
-    //     method: "DELETE",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ id }),
-    //   });
-    //   if (response.ok) {
-    //     // toast.success("Toda entradas excluídas com sucesso!");
-    //     // router.push("/");
-    //     console.log(response);
-    //   }
-    // }
+    console.log(hasDetails);
+    if ((hasDetails as number) <= 1) {
+      toast.success(
+        `Toda entradas do dia ${entry?.createdAt} excluídas com sucesso!`
+      );
+      router.push("/");
+      // const response = await fetch(`/api/entries`, {
+      //   method: "DELETE",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ id }),
+      // });
+      // if (response.ok) {
+      //   toast.success("Toda entradas excluídas com sucesso!");
+      //   console.log(response);
+      // }
+    }
   }
 
   const deleteEntry = async (id: string) => {

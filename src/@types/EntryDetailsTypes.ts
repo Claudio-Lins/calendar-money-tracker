@@ -1,7 +1,7 @@
 export interface EntryDetailTypes {
   id: string;
   entryId: string;
-  description: string;
+  description: string | null;
   locale: string;
   amount: number;
   type: string;

@@ -12,7 +12,7 @@ import { Euro, MapPin, MenuSquare } from "lucide-react";
 
 const createEntryFormSchema = z.object({
   description: z.string().nonempty("A descrição é obrigátoria"),
-  amount: z.number().nonnegative("O valor tem que ser positivo"),
+  amount: z.number().positive("O valor deve ser positivo"),
   type: z.string().default("EXPENSE"),
   locale: z.string().optional(),
   createdAt: z.date().default(() => new Date()),
@@ -22,7 +22,7 @@ type createEntryFormData = z.infer<typeof createEntryFormSchema>;
 
 interface FormDataProps {
   description?: string;
-  amount: number | string;
+  amount: number;
   type: string;
   locale?: string;
   createdAt?: Date;
@@ -53,7 +53,7 @@ export function Form() {
 
   const [formData, setFormData] = useState<FormDataProps>({
     description: "",
-    amount: "",
+    amount: 0,
     type: typeOfEntry,
     locale: "",
     createdAt: new Date(),
@@ -159,6 +159,7 @@ export function Form() {
         <input
           id="Amount"
           type="number"
+          step=".01"
           placeholder="Valor"
           className="w-full rounded-md border-none sm:text-sm"
           {...register("amount", { valueAsNumber: true })}

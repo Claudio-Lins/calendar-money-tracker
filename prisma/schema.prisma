@@ -20,7 +20,7 @@ model EntryDetails {
   entry       Entry    @relation(fields: [entryId], references: [id])
   description String?
   locale      String?
-  amount      Float
+  amount      Float    @default(0.00)
   type        Type     @default(EXPENSE)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

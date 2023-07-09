@@ -27,11 +27,7 @@ export async function BtnDeleteEntry({
 
   async function deleteEmptyEntry(id: string) {
     if ((hasDetails as number) <= 1) {
-      toast.success(
-        `Toda entradas do dia ${new Intl.DateTimeFormat("pt-PT").format(
-          entry?.createdAt as Date
-        )} excluídas com sucesso!`
-      );
+      toast.success(`Toda entradas do dia excluídas com sucesso!`);
       router.push("/");
       // const response = await fetch(`/api/entries`, {
       //   method: "DELETE",

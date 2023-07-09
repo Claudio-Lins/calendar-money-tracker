@@ -1,5 +1,5 @@
 "use client";
-
+import { InputFloatLabel, InputSimple } from "@claudiolins-dev/claudiolins-lib";
 import { useNewEntrie } from "@/context/entriesStore";
 import { useModal } from "@/context/modalStore";
 import { useRouter } from "next/navigation";
@@ -8,29 +8,38 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
+import { Euro, MapPin, MenuSquare } from "lucide-react";
 
 const createEntryFormSchema = z.object({
   description: z.string().nonempty("A descrição é obrigátoria"),
-  amount: z.number().optional(),
-  type: z.string().optional(),
+  amount: z.number().nonnegative("O valor tem que ser positivo"),
+  type: z.string().default("EXPENSE"),
   locale: z.string().optional(),
-  createdAt: z.date().optional(),
+  createdAt: z.date().default(() => new Date()),
 });
+
+type createEntryFormData = z.infer<typeof createEntryFormSchema>;
 
 interface FormDataProps {
   description?: string;
   amount: number | string;
   type: string;
   locale?: string;
-  createdAt?: Date | string;
+  createdAt?: Date;
 }
 export function Form() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<createEntryFormData>({
     resolver: zodResolver(createEntryFormSchema),
+    defaultValues: {
+      description: "",
+      type: "EXPENSE",
+      locale: "",
+      createdAt: new Date(),
+    },
   });
   const router = useRouter();
   const { typeOfEntry } = useNewEntrie();
@@ -103,33 +112,61 @@ export function Form() {
         <input
           type="date"
           placeholder="Data"
+          className="w-full rounded-md border-zinc-200 sm:text-sm text-zinc-500"
           {...register("createdAt", {
             valueAsDate: true,
           })}
         />
         {errors.createdAt && <span>{errors.createdAt.message}</span>}
       </div>
-      <div className="flex flex-col">
+
+      <div className="flex items-center border rounded-lg mt-2">
+        <label htmlFor="Descrição" className="sr-only">
+          Descrição
+        </label>
         <input
+          id="Descrição"
           type="text"
           placeholder="description"
+          className="w-full rounded-md border-none sm:text-sm"
           {...register("description")}
         />
-        {errors.description && (
-          <span className="text-[10px]">{errors.description.message}</span>
-        )}
+        <span className="pointer-events-none w-10 place-content-center text-gray-500">
+          <MenuSquare size={16} />
+        </span>
+        {errors.description && toast.error(`${errors.description.message}`)}
       </div>
-      <div className="flex flex-col">
-        <input type="text" placeholder="Local" {...register("locale")} />
-        {errors.locale && <span>{errors.locale.message}</span>}
-      </div>
-      <div className="flex flex-col">
+      <div className="flex items-center border rounded-lg mt-2">
+        <label htmlFor="Local" className="sr-only">
+          Local
+        </label>
         <input
+          type="text"
+          id="Local"
+          placeholder="Local"
+          className="w-full rounded-md border-none sm:text-sm"
+          {...register("locale")}
+        />
+        <span className="pointer-events-none w-10 place-content-center text-gray-500">
+          <MapPin size={16} />
+        </span>
+        {errors.locale && toast.error(` ${errors.locale.message}`)}
+      </div>
+      <div className="flex items-center border rounded-lg mt-2">
+        <label htmlFor="Amoutn" className="sr-only">
+          Amount
+        </label>
+        <input
+          id="Amount"
           type="number"
           placeholder="Valor"
+          className="w-full rounded-md border-none sm:text-sm"
           {...register("amount", { valueAsNumber: true })}
         />
-        {errors.amount && <span>{errors.amount.message}</span>}
+        <span className="pointer-events-none w-10 place-content-center text-gray-500">
+          <Euro size={16} />
+        </span>
+        {errors.amount && toast.error(` ${errors.amount.message}`)}
       </div>
       <div className="flex flex-col">
         <button

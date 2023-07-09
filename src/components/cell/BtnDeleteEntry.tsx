@@ -1,8 +1,9 @@
 "use client";
 import { EntryDetail, EntryElement, EntryTypes } from "@/@types/EntryTypes";
 import { Entry } from "@prisma/client";
+import { RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 interface BtnDeleteEntryPorps {
@@ -21,6 +22,7 @@ export async function BtnDeleteEntry({
   children,
   id,
 }: BtnDeleteEntryPorps) {
+  const [deleting, setDeleting] = useState(false);
   const router = useRouter();
 
   const hasDetails = entry.entryDetails.length;
@@ -53,9 +55,11 @@ export async function BtnDeleteEntry({
         body: JSON.stringify({ id }),
       });
       if (response.ok) {
+        setDeleting(true);
         deleteEmptyEntry(id);
         router.refresh();
         toast.success("Entrada excluída com sucesso!");
+        setDeleting(false);
       } else {
         throw new Error("Erro ao excluir a entrada");
       }
@@ -63,5 +67,14 @@ export async function BtnDeleteEntry({
       toast.error("Erro ao excluir a entrada:");
     }
   };
-  return <button onClick={() => deleteEntry(String(id))}>{children}</button>;
+  return (
+    <button
+      disabled={deleting}
+      onClick={() => deleteEntry(String(id))}
+      className="flex items-center justify-center w-8 h-8 text-white gap-2"
+    >
+      {children}
+      {deleting && <RefreshCw size={16} className="animate-spin" />}
+    </button>
+  );
 }

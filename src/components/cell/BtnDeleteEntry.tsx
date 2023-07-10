@@ -27,10 +27,10 @@ export async function BtnDeleteEntry({
   const hasDetails = entry.entryDetails.length;
 
   async function deleteEmptyEntry(id: string) {
-    // if ((hasDetails as number) <= 1) {
-    toast.success(`Toda entradas do dia excluídas com sucesso!`);
-    router.push("/");
-    // }
+    if ((hasDetails as number) <= 1) {
+      toast.success(`Toda entradas do dia excluídas com sucesso!`);
+      router.push("/");
+    }
   }
 
   const deleteEntry = async (id: string) => {
@@ -44,7 +44,7 @@ export async function BtnDeleteEntry({
       });
       if (response.ok) {
         setDeleting(true);
-        // deleteEmptyEntry(id);
+        deleteEmptyEntry(id);
         router.refresh();
         toast.success("Entrada excluída com sucesso!");
         setDeleting(false);

@@ -1,10 +1,10 @@
 "use client";
-import { EntryDetail, EntryElement, EntryTypes } from "@/@types/EntryTypes";
-import { Entry } from "@prisma/client";
+import { EntryDetail } from "@/@types/EntryTypes";
 import { RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { deleteEmptyEntry } from "@/lib/deleteEmptyEntry";
 
 interface BtnDeleteEntryPorps {
   id: string;
@@ -24,25 +24,13 @@ export async function BtnDeleteEntry({
 }: BtnDeleteEntryPorps) {
   const [deleting, setDeleting] = useState(false);
   const router = useRouter();
-
   const hasDetails = entry.entryDetails.length;
 
   async function deleteEmptyEntry(id: string) {
-    if ((hasDetails as number) <= 1) {
-      toast.success(`Toda entradas do dia excluídas com sucesso!`);
-      router.push("/");
-      // const response = await fetch(`/api/entries`, {
-      //   method: "DELETE",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ id }),
-      // });
-      // if (response.ok) {
-      //   toast.success("Toda entradas excluídas com sucesso!");
-      //   console.log(response);
-      // }
-    }
+    // if ((hasDetails as number) <= 1) {
+    toast.success(`Toda entradas do dia excluídas com sucesso!`);
+    router.push("/");
+    // }
   }
 
   const deleteEntry = async (id: string) => {
@@ -56,7 +44,7 @@ export async function BtnDeleteEntry({
       });
       if (response.ok) {
         setDeleting(true);
-        deleteEmptyEntry(id);
+        // deleteEmptyEntry(id);
         router.refresh();
         toast.success("Entrada excluída com sucesso!");
         setDeleting(false);

@@ -8,10 +8,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
-import { Euro, MapPin, MenuSquare } from "lucide-react";
+import { CheckCheck, Euro, MapPin, MenuSquare } from "lucide-react";
 
 const createEntryFormSchema = z.object({
-  description: z.string().nonempty("A descrição é obrigátoria"),
+  description: z
+    .string()
+    .nonempty("A descrição é obrigátoria")
+    .min(4, "Minimo de 3 caracteres"),
   amount: z.number().positive("O valor deve ser positivo"),
   type: z.string().default("EXPENSE"),
   locale: z.string().optional(),
@@ -105,6 +108,8 @@ export function Form() {
     setIsOpen(false);
     resetSlide();
   }
+  errors.amount && toast.error(` ${errors.amount.message}`);
+  errors.description && toast.error(`${errors.description.message}`);
 
   return (
     <form onSubmit={handleSubmit(handleCreateEntry)} className="flex flex-col">
@@ -117,7 +122,6 @@ export function Form() {
             valueAsDate: true,
           })}
         />
-        {errors.createdAt && <span>{errors.createdAt.message}</span>}
       </div>
 
       <div className="flex items-center border rounded-lg mt-2">
@@ -134,7 +138,6 @@ export function Form() {
         <span className="pointer-events-none w-10 place-content-center text-gray-500">
           <MenuSquare size={16} />
         </span>
-        {errors.description && toast.error(`${errors.description.message}`)}
       </div>
       <div className="flex items-center border rounded-lg mt-2">
         <label htmlFor="Local" className="sr-only">
@@ -167,7 +170,6 @@ export function Form() {
         <span className="pointer-events-none w-10 place-content-center text-gray-500">
           <Euro size={16} />
         </span>
-        {errors.amount && toast.error(` ${errors.amount.message}`)}
       </div>
       <div className="flex flex-col">
         <button

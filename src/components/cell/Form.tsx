@@ -9,6 +9,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { CheckCheck, Euro, MapPin, MenuSquare } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "../ui/button";
 
 const createEntryFormSchema = z.object({
   description: z
@@ -114,7 +116,7 @@ export function Form() {
   return (
     <form onSubmit={handleSubmit(handleCreateEntry)} className="flex flex-col">
       <div className="flex flex-col">
-        <input
+        <Input
           type="date"
           placeholder="Data"
           className="w-full rounded-md border-zinc-200 sm:text-sm text-zinc-500"
@@ -123,12 +125,11 @@ export function Form() {
           })}
         />
       </div>
-
       <div className="flex items-center border rounded-lg mt-2">
         <label htmlFor="Descrição" className="sr-only">
           Descrição
         </label>
-        <input
+        <Input
           id="Descrição"
           type="text"
           placeholder="description"
@@ -143,7 +144,7 @@ export function Form() {
         <label htmlFor="Local" className="sr-only">
           Local
         </label>
-        <input
+        <Input
           type="text"
           id="Local"
           placeholder="Local"
@@ -159,12 +160,12 @@ export function Form() {
         <label htmlFor="Amoutn" className="sr-only">
           Amount
         </label>
-        <input
+        <Input
           id="Amount"
           type="number"
           step=".01"
           placeholder="Valor"
-          className="w-full rounded-md border-none sm:text-sm"
+          className="w-full rounded-md border-none sm:text-sm focus:right-0"
           {...register("amount", { valueAsNumber: true })}
         />
         <span className="pointer-events-none w-10 place-content-center text-gray-500">
@@ -172,12 +173,12 @@ export function Form() {
         </span>
       </div>
       <div className="flex flex-col">
-        <button
+        <Button
           className="px-2 py-1 bg-zinc-700 rounded-lg shadow mt-4 text-zinc-100"
           type="submit"
         >
           Create
-        </button>
+        </Button>
       </div>
     </form>
   );

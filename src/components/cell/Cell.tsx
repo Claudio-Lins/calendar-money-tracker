@@ -70,7 +70,7 @@ export function Cell({ entries }: EntryTypes) {
                   ))}
                 </div>
               </ScrollArea>
-              <div className="bottom-0  w-full flex items-center justify-between bg-zinc-800 px-2 h-12">
+              <div className="bottom-0  w-full flex items-center justify-between bg-zinc-800 px-2 h-16">
                 <div className="text-sm text-red-600 font-semibold">
                   {new Intl.NumberFormat("pt", {
                     style: "currency",

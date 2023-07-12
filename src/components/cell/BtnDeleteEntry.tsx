@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { deleteEmptyEntry } from "@/lib/deleteEmptyEntry";
+import { Button } from "../ui/button";
 
 interface BtnDeleteEntryPorps {
   id: string;
@@ -56,13 +57,14 @@ export async function BtnDeleteEntry({
     }
   };
   return (
-    <button
+    <Button
+      variant={"ghost"}
       disabled={deleting}
       onClick={() => deleteEntry(String(id))}
-      className="flex items-center justify-center w-8 h-8 text-white gap-2"
+      className=""
     >
       {children}
       {deleting && <RefreshCw size={16} className="animate-spin" />}
-    </button>
+    </Button>
   );
 }

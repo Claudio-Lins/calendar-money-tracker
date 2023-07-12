@@ -1,8 +1,16 @@
-import { Modal } from "@/components/Modal";
 import { BtnDeleteEntry } from "@/components/cell/BtnDeleteEntry";
 import prisma from "@/lib/prisma";
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 
 type EntryProps = {
   params: {
@@ -27,74 +35,62 @@ export default async function Entry({ params: { id } }: EntryProps) {
   });
 
   return (
-    <div className="text-white flex pt-10 justify-center w-full h-screen">
-      <div className="">
-        <h1>
-          {new Intl.DateTimeFormat("pt", {
-            dateStyle: "medium",
-          }).format(entry?.entryDetails[0]?.createdAt)}
-        </h1>
-        <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-zinc-500">
-          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm dark:divide-gray-700 dark:bg-gray-900">
-            <thead className="ltr:text-left rtl:text-right">
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white">
-                  Description
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white">
-                  Local
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white">
-                  Type
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white">
-                  Amount
-                </th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {entry?.entryDetails.map((entryDetail, i) => {
-                return (
-                  <>
-                    <tr
-                      key={entryDetail.id}
-                      className={`
-                        hover:bg-zinc-950
-                      ${i % 2 === 0 ? "bg-zinc-700" : "bg-zinc-800"}`}
-                    >
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-200">
-                        {entryDetail.description}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-200">
-                        {entryDetail.locale}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-200">
-                        {entryDetail.type}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-200">
-                        {new Intl.NumberFormat("pt-PT", {
-                          style: "currency",
-                          currency: "EUR",
-                        }).format(entryDetail.amount)}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-gray-200 flex items-center gap-2">
-                        <button>
-                          <Pencil size={16} />
-                        </button>
-                        <BtnDeleteEntry entry={entry} id={entryDetail.id}>
-                          <Trash2 size={16} />
-                        </BtnDeleteEntry>
-                      </td>
-                    </tr>
-                  </>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <Link href={"/"}>Voltar</Link>
+    <div className=" flex flex-col items-center justify-center gap-4">
+      <div className="overflow-x-auto w-full max-w-2xl rounded-lg border border-gray-400 dark:border-zinc-500 text-zinc-50">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[300px] font-bold text-base">
+                Description
+              </TableHead>
+              <TableHead className="w-[100px] font-bold text-base">
+                Local
+              </TableHead>
+              <TableHead className="w-[100px] font-bold text-base">
+                Type
+              </TableHead>
+              <TableHead className="w-[100px] font-bold text-base">
+                Amount
+              </TableHead>
+              <TableHead className="w-[100px] font-bold text-base text-center">
+                Actions
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {entry?.entryDetails.map((entryDetail, i) => {
+              return (
+                <>
+                  <TableRow key={entryDetail.id}>
+                    <TableCell className="font-medium">
+                      {entryDetail.description}
+                    </TableCell>
+                    <TableCell>{entryDetail.locale}</TableCell>
+                    <TableCell>{entryDetail.type}</TableCell>
+                    <TableCell>
+                      {new Intl.NumberFormat("pt-PT", {
+                        style: "currency",
+                        currency: "EUR",
+                      }).format(entryDetail.amount)}
+                    </TableCell>
+                    <TableCell className="flex items-center justify-center">
+                      <Button variant={"ghost"}>
+                        <Pencil size={16} />
+                      </Button>
+                      <BtnDeleteEntry entry={entry} id={entryDetail.id}>
+                        <Trash2 size={16} />
+                      </BtnDeleteEntry>
+                    </TableCell>
+                  </TableRow>
+                </>
+              );
+            })}
+          </TableBody>
+        </Table>
       </div>
+      <Button>
+        <Link href={"/"}>Voltar</Link>
+      </Button>
     </div>
   );
 }

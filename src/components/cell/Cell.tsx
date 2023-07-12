@@ -4,6 +4,8 @@ import { HeaderCell } from "./HeaderCell";
 import { Eye } from "lucide-react";
 import { useNewEntrie } from "@/context/entriesStore";
 import { EntryTypes } from "@/@types/EntryTypes";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 export function Cell({ entries }: EntryTypes) {
   return (
@@ -42,37 +44,32 @@ export function Cell({ entries }: EntryTypes) {
                   .slice(0, 3)}
                 href={`/entry/${entry.id}`}
               />
-              <div className="w-full h-full overflow-y-scroll p-2 ">
+              <ScrollArea className="w-full h-full p-4">
                 <div className="min-w-full text-zinc-300 text-xs">
-                  <div
-                    className={`flex flex-col gap-2
-            
-            `}
-                  >
-                    {entry.entryDetails.map((details) => (
-                      <div
-                        key={details.id}
-                        className={`flex items-center justify-between w-full border-b border-zinc-600 pb-1
+                  {entry.entryDetails.map((details) => (
+                    <div
+                      key={details.id}
+                      className={`flex items-center justify-between w-full border-b border-zinc-600 pb-1
               ${details.type === "INCOME" ? "text-green-300" : "text-red-300"}
               `}
-                      >
-                        <p>{details.description}</p>
-                        <div className="flex items-center gap-1">
-                          <strong>
-                            {new Intl.NumberFormat("pt-PT", {
-                              style: "currency",
-                              currency: "EUR",
-                            }).format(details.amount)}
-                          </strong>
-                          <button className="w-full py-2 whitespace-nowrap">
-                            <Eye size={12} />
-                          </button>
-                        </div>
+                    >
+                      <p>{details.description}</p>
+                      <div className="flex items-center gap-1">
+                        <strong>
+                          {new Intl.NumberFormat("pt-PT", {
+                            style: "currency",
+                            currency: "EUR",
+                          }).format(details.amount)}
+                        </strong>
+                        <button className="w-full py-2 whitespace-nowrap">
+                          <Eye size={12} />
+                        </button>
+                        <Separator className="my-6" />
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
+              </ScrollArea>
               <div className="bottom-0  w-full flex items-center justify-between bg-zinc-800 px-2 h-12">
                 <div className="text-sm text-red-600 font-semibold">
                   {new Intl.NumberFormat("pt", {

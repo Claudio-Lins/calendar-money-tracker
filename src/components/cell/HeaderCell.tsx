@@ -10,7 +10,7 @@ interface HeaderCellProps {
 
 export function HeaderCell({ day, daysWeek, href }: HeaderCellProps) {
   return (
-    <div className="w-full bg-purple-500 flex justify-between items-center px-2 h-12 relative">
+    <div className="w-full bg-purple-500 flex justify-between items-center p-2 h-12 relative">
       <span className=" text-white font-light ml-1">{daysWeek}</span>
       <span className=" text-white font-semibold text-2xl">{day}</span>
       <div className="flex items-center gap-1">

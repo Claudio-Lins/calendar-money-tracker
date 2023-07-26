@@ -1,6 +1,4 @@
 import prisma from "@/lib/prisma";
-import { Entry } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 // create entry
@@ -93,4 +91,30 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     entries,
   });
+}
+
+export async function PUT(request: NextRequest) {
+  const body: {
+    entryDetailsId: string;
+    description: string;
+    amount: number;
+    type: "INCOME" | "EXPENSE";
+    locale: string;
+    createdAt: Date;
+  } = await request.json();
+
+  const entryDetails = await prisma.entryDetails.update({
+    where: {
+      id: body.entryDetailsId, // Substitua pela sua propriedade de identificação única correta
+    },
+    data: {
+      description: body.description,
+      amount: body.amount,
+      type: body.type,
+      locale: body.locale,
+      createdAt: body.createdAt,
+    },
+  });
+
+  return NextResponse.json({ entryDetails });
 }

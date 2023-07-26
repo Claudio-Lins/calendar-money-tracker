@@ -26,10 +26,10 @@ const createEntryFormSchema = z.object({
 type createEntryFormData = z.infer<typeof createEntryFormSchema>;
 
 interface FormDataProps {
-  description?: string;
+  description: string;
   amount: number;
   type: string;
-  locale?: string;
+  locale: string;
   createdAt?: Date;
 }
 export function Form() {

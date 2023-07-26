@@ -18,8 +18,8 @@ model EntryDetails {
   id          String   @id @default(uuid())
   entryId     String
   entry       Entry    @relation(fields: [entryId], references: [id])
-  description String?
-  locale      String?
+  description String
+  locale      String
   amount      Float    @default(0.00)
   type        Type     @default(EXPENSE)
   createdAt   DateTime @default(now())

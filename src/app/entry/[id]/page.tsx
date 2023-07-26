@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { BtnUpdateEntry } from "@/components/cell/BtnUpdateEntry";
 
 type EntryProps = {
   params: {
@@ -74,9 +75,7 @@ export default async function Entry({ params: { id } }: EntryProps) {
                       }).format(entryDetail.amount)}
                     </TableCell>
                     <TableCell className="flex items-center justify-center">
-                      <Button variant={"ghost"}>
-                        <Pencil size={16} />
-                      </Button>
+                      <BtnUpdateEntry entryDetails={entryDetail} />
                       <BtnDeleteEntry entry={entry} id={entryDetail.id}>
                         <Trash2 size={16} />
                       </BtnDeleteEntry>

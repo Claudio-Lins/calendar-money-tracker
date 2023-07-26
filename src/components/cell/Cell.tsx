@@ -11,7 +11,7 @@ export function Cell({ entries }: EntryTypes) {
   return (
     <>
       {entries
-        .filter((entry) => {
+        ?.filter((entry) => {
           return entry.entryDetails.length > 0;
         })
         // sort by date

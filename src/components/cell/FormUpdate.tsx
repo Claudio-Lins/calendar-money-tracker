@@ -20,13 +20,15 @@ interface FormUpdatePorps {
   entryDetails: EntryDetailTypes;
 }
 
+type EntryDetailsFormValues = z.infer<typeof schema>;
+
 export const FormUpdate = ({ entryDetails }: FormUpdatePorps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({
+  } = useForm<EntryDetailsFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       description: entryDetails.description,
@@ -37,30 +39,20 @@ export const FormUpdate = ({ entryDetails }: FormUpdatePorps) => {
     },
   });
 
-  const updateEntryDetails = async (data: EntryDetailTypes) => {
-    try {
-      const response = await fetch(`/api/entries`, {
+  async function onSubmit(data: EntryDetailsFormValues) {
+    const res = await fetch(
+      `/api/entryDetails/${entryDetails.entryId}/${entryDetails.id}`,
+      {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("TROW");
+        cache: "no-cache",
       }
-
-      // Lógica adicional após a atualização bem-sucedida
-    } catch (error) {
-      console.error(error);
-      // Lógica para lidar com erro durante a atualização
-    }
-  };
-
-  const onSubmit = (data: any) => {
-    updateEntryDetails(data);
-  };
+    ).then((res) => res.json());
+    console.log({ data });
+  }
 
   // Atualizar os valores do React Hook Form quando os dados externos são alterados
   useEffect(() => {
@@ -130,13 +122,14 @@ export const FormUpdate = ({ entryDetails }: FormUpdatePorps) => {
           <Euro size={16} />
         </span>
       </div>
-      {entryDetails.id}
+      <p>entryDetailsId= {entryDetails.id}</p>
+      <p>entryId= {entryDetails.entryId}</p>
       <div className="flex flex-col">
         <Button
           className="px-2 py-1 bg-zinc-700 rounded-lg shadow mt-4 text-zinc-100"
           type="submit"
         >
-          Create
+          Update
         </Button>
       </div>
     </form>
